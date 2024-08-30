@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <limits>
 
 bool minMultK(int el, int k, int* S){
     //std::cout << "el: " << el << " | k-1: " << k-1 << std::endl;
@@ -22,8 +23,16 @@ int main(){
     for(int i = 0; i < t; i++){
         long n = 0;
         std::cin >> n;
-        std::string b;
-        std::getline(std::cin >> std::ws, b);
+        
+        //std::string b;
+        //b.reserve(n);
+        //std::getline(std::cin >> std::ws, b);
+        
+        char* b = nullptr;
+        b = new char[n+1];
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cin.getline(b, n+1);
+        
         //std::cout << "You entered: " << b << std::endl;
         int S[n] = {};
         int T[n] = {};
@@ -34,6 +43,9 @@ int main(){
                 T[cont0++] = j+1;
             }
         }
+        delete[] b;
+        b = nullptr;
+
         int totalCost = 0;
         for(long j = 0; j < cont0; j++){
             //std::cout << T[j] << " ";
