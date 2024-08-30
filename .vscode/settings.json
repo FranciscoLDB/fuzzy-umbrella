@@ -105,5 +105,6 @@
     "streambuf": "cpp",
     "cinttypes": "cpp",
     "typeinfo": "cpp"
-  }
+  },
+  "C_Cpp.errorSquiggles": "disabled"
 }

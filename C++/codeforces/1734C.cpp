@@ -1,34 +1,61 @@
 #include <iostream>
+#include <string>
+#include <vector>
 
-
+bool minMultK(int el, int k, int* S){
+    //std::cout << "el: " << el << " | k-1: " << k-1 << std::endl;
+    for(int i = k-1; i < el-1; i+=k){
+        //std::cout << "S[" << i << "]: " << S[i] << std::endl;
+        if(S[i] != 0){
+            //std::cout << "FALSE" << std::endl;
+            return false;
+        }
+    }
+    return true;
+}
 
 int main(){
     int t = 0;
     std::cin >> t;
-    int resp[t] = {};
+    std::vector<int> resp;
+    
     for(int i = 0; i < t; i++){
-        
         long n = 0;
         std::cin >> n;
-        int b = 0;
-        std::cin >> b;
-
+        std::string b;
+        std::getline(std::cin >> std::ws, b);
+        //std::cout << "You entered: " << b << std::endl;
+        int S[n] = {};
         int T[n] = {};
         int cont0 = 0;
-        int* E = nullptr;
         for(long j = 0; j < n; j++){
-            T[j] = b;
-            if(!b) cont0++;
+            S[j] = j+1;
+            if(!(bool)(b[j]-'0')){ 
+                T[cont0++] = j+1;
+            }
         }
-        E = new int[cont0];
-        for(long j = 0; j < n; j++){
-            std::cout << T[j];
+        int totalCost = 0;
+        for(long j = 0; j < cont0; j++){
+            //std::cout << T[j] << " ";
+            for(int k = T[0]; k <= T[j]; k++){
+                //std::cout << "T[j]: " << T[j] << " k: " << k << std::endl;
+                if(T[j]%k == 0 && minMultK(T[j], k, S)){
+                //if(T[j]%k == 0){
+                    totalCost += k;
+                    //std::cout << "[Excluding] Item: " << T[j] << " cost: " << k << " S[k]:" << S[k-1] << std::endl;
+                    S[T[j]-1] = 0;
+                    break;
+                }
+            }
         }
-        std::cout << std::endl;
+        resp.push_back(totalCost);
+
     }
+    //std::cout << "¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨¨" << std::endl;
     for(int i = 0; i < t; i++){
         std::cout << resp[i] << std::endl;
     }
+
 
     return 0;
 }
